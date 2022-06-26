@@ -25,3 +25,5 @@
   **Automatically saves codes with names in "history.txt".**
 
   **Automatically rotates user-agents to prevent tracking.**
+  
+  **Automatically use last code again by typing "last"!
