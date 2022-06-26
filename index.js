@@ -4,15 +4,15 @@ const ProxyAgent = require('proxy-agent');
 const colors = require('colors');
 const readLastLine = require('read-last-line');
 const fs = require('fs');
+fs.writeFileSync('history.txt', [...new Set(fs.readFileSync('history.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
 process.on('uncaughtException', err => {});
 process.on('unhandledRejection', err => {});
-function write(content, file) {
-    [...new Set(fs.appendFile(file, content, function(err) {}))];
-}
 const {
     v4: uuidv4
 } = require('uuid');
-var shadow_token = uuidv4();
+function write(content, file) {
+    [...new Set(fs.appendFile(file, content, function(err) {}))];
+}
 var fail = 0;
 var work = 0;
 function clear(file) {
@@ -48,9 +48,14 @@ class get {
 }
 class Snapchat {
     static spamSendit(code) {
+		if (!code) {
+			console.log(`[Sendit] Error Invalid Code!`.inverse);
+		} else {
         console.log(`[Sendit] Started Spamming ${code}`.inverse);
+		}
         let i = 0,
             int = setInterval(() => {
+                var shadow_token = uuidv4();
                 var proxy = proxies[Math.floor(Math.random() * proxies.length)];
                 var text = messages[Math.floor(Math.random() * messages.length)];
                 var useragent = useragents[Math.floor(Math.random() * useragents.length)];
@@ -74,15 +79,14 @@ class Snapchat {
                     if (body.status === 'failure') {
                         if (res.statusCode == 500) {
                             fail++;
-                            console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Error: Invalid Code ${code}!`.red);
+                            console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Error: Invalid Code!`.red);
                         } else if (res.statusCode == 400) {
                             fail++;
-                            console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Error: Invalid Code ${code}!`.red);
+                            console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Error: Invalid Code!`.red);
                         }
                         fail++;
-                        console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Error: Invalid Code ${code}!`.red);
+                        console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Error: Invalid Code!`.red);
                         fs.writeFileSync('history.txt', [...new Set(fs.readFileSync('history.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
-                        write(`${code} - ${body.error.message} ${"\n"}`, "history.txt");
                     };
                     if (body.status === 'success') {
                         var id = body.payload.sticker.author.id;
@@ -128,7 +132,7 @@ class Snapchat {
                             work++;
                             console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${work}] [Sendit] => Sent "${text}" to "${name}" with code "${code}" | ${proxy}`.green)
                             fs.writeFileSync('history.txt', [...new Set(fs.readFileSync('history.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
-                            write(`${code} - ${name} ${'\n'}`, "history.txt");
+                            write(`${name} - ${code}${'\n'}`, "history.txt");
                         } else {
                             fail++;
                             console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Failed to send "${text}" with code "${code}" | ${proxy}`.red);
@@ -140,35 +144,42 @@ class Snapchat {
             }, 0);
     }
 }
-    readLastLine.read('history.txt', 4).then(function(lines) {
+readLastLine.read('history.txt', 4).then(function(lines) {
     prompt.start();
     process.title = `[Petey's Sendit Spammer] - `;
-	console.log('┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐');
+    console.log('┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐');
     console.log('│██████╗░███████╗████████╗███████╗██╗░░░██╗██╗░██████╗                                                        │');
     console.log('│██╔══██╗██╔════╝╚══██╔══╝██╔════╝╚██╗░██╔╝╚█║██╔════╝                                                        │');
     console.log('│██████╔╝█████╗░░░░░██║░░░█████╗░░░╚████╔╝░░╚╝╚█████╗░                                                        │');
     console.log('│██╔═══╝░██╔══╝░░░░░██║░░░██╔══╝░░░░╚██╔╝░░░░░░╚═══██╗                                                        │');
     console.log('│██║░░░░░███████╗░░░██║░░░███████╗░░░██║░░░░░░██████╔╝                                                        │');
     console.log('│╚═╝░░░░░╚══════╝░░░╚═╝░░░╚══════╝░░░╚═╝░░░░░░╚═════╝░                                                        │');
-    console.log('│v1.0.5                                                                                                       │');
+    console.log('│v1.0.6                                                                                                       │');
     console.log('│░██████╗███████╗███╗░░██╗██████╗░██╗████████╗  ░██████╗██████╗░░█████╗░███╗░░░███╗███╗░░░███╗███████╗██████╗░│');
     console.log('│██╔════╝██╔════╝████╗░██║██╔══██╗██║╚══██╔══╝  ██╔════╝██╔══██╗██╔══██╗████╗░████║████╗░████║██╔════╝██╔══██╗│');
     console.log('│╚█████╗░█████╗░░██╔██╗██║██║░░██║██║░░░██║░░░  ╚█████╗░██████╔╝███████║██╔████╔██║██╔████╔██║█████╗░░██████╔╝│');
     console.log('│░╚═══██╗██╔══╝░░██║╚████║██║░░██║██║░░░██║░░░  ░╚═══██╗██╔═══╝░██╔══██║██║╚██╔╝██║██║╚██╔╝██║██╔══╝░░██╔══██╗│');
     console.log('│██████╔╝███████╗██║░╚███║██████╔╝██║░░░██║░░░  ██████╔╝██║░░░░░██║░░██║██║░╚═╝░██║██║░╚═╝░██║███████╗██║░░██║│');
     console.log('│╚═════╝░╚══════╝╚═╝░░╚══╝╚═════╝░╚═╝░░░╚═╝░░░  ╚═════╝░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░╚═╝│');
-	console.log('├─────────────────────────────────────────────────────────────┬───────────────────────────────────────────────┘');
+    console.log('├─────────────────────────────────────────────────────────────┬───────────────────────────────────────────────┘');
     console.log(`│Code Ex. ab4b2c69-n8a2-45ba-8a8e-3bb08440e8cm                │`);
     var thelines = lines.split(/\r?\n/).filter(line => line.trim() !== "").join(`${"\n"}│`);
-	console.log('├─────────────────────────────────────────────────────────────┘');
+    console.log('├─────────────────────────────────────────────────────────────┘');
     console.log(`│${thelines}`);
-	console.log('└──────────────────────────────────────────────────────────────');
-    console.log('Please enter the following:');
+    console.log('└──────────────────────────────────────────────────────────────');
+    console.log('Please enter the code or "last":');
     prompt.get(['code'], function(err, result) {
-        var code = result.code;
-        try {
-            code = new URL(code).pathname.split('/').pop();
-        } catch (err) {}
-        get.snagProxy(code);
+        if (result.code.includes('last')) {
+            readLastLine.read('history.txt', 1).then(function(lines) {
+                var thelines = lines.split(/\r?\n/).filter(line => line.trim() !== "").join(`${"\n"}`);
+                var code = thelines.match(/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/g)[0];
+                get.snagProxy(code);
+            });
+        } else {
+            try {
+                var code = result.code.match(/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/g)[0];
+            } catch (err) {}
+            get.snagProxy(code);
+        }
     });
 });
