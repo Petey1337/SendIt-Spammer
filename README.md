@@ -1,4 +1,5 @@
 ##### Sendit Spammer Nodejs - Created by Petey
+**Support:** https://discord.gg/hWf8wk5tzF
 ![](https://github.com/Petey1337/sendit-spammer/blob/main/sendit%20video.gif?raw=true)
 ### ⚠️ You are fully responsible for however you use this. ⚠️
 
