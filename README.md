@@ -26,4 +26,4 @@
 
   **Automatically rotates user-agents to prevent tracking.**
   
-  **Automatically use last code again by typing "last"!
+  **Automatically use last code again by typing "last"!**
