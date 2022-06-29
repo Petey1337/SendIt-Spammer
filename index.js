@@ -28,31 +28,32 @@ var useragents = ['Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, li
 class get {
     static snagProxy(code) {
         clear("proxies.txt");
-        request.get('https://api.proxyscrape.com/?request=getproxies&proxytype=socks4&timeout=10000&country=all', {
-                headers: {
-                    'Content-Type': 'text/plain;charset=UTF-8'
-                }
-            },
-            (err, res, body) => {
-                if (res.statusCode == 200) {
+        var links = ["https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt", "https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks4&timeout=10000&country=all&ssl=all&anonymity=all", "https://openproxylist.xyz/socks4.txt", "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks4.txt", "https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt", "https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS4_RAW.txt", "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt", "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt", "https://raw.githubusercontent.com/RX4096/proxy-list/main/online/socks4.txt", "https://www.freeproxychecker.com/result/socks4_proxies.txt", "https://www.proxy-list.download/api/v1/get?type=socks4"];
+        links.forEach(url => {
+            request.get(`${url}`, {
+                    'timeout': '5000',
+                    headers: {
+                        'Content-Type': 'text/plain;charset=UTF-8'
+                    }
+                },
+                (err, res, body) => {
                     write(body, "proxies.txt");
-                    console.log(`[PROXY Grabber]: [Success]: Grabbed ${body.split('\n').length} proxies!`.inverse);
+                    fs.writeFileSync('proxies.txt', [...new Set(fs.readFileSync('proxies.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
+                    if (url.length > 10) url = url.substring(0, 45);
+                    console.log(`[PROXY Grabber]: [Success]: [${url.replace('https://', '')}] Grabbed ${body.split('\n').length} proxies!`.inverse);
                     var proxycount = body.split('\n').length;
-                    Snapchat.spamSendit(code);
-                } else {
-                    console.log(`[PROXY Grabber]: [Failure]: Failed to grab proxies... Retrying!`.red);
-                    get.snagProxy(code);
-                }
-            });
+                });
+        });
+        Snapchat.spamSendit(code);
     }
 }
 class Snapchat {
     static spamSendit(code) {
-		if (!code) {
-			console.log(`[Sendit] Error Invalid Code!`.inverse);
-		} else {
-        console.log(`[Sendit] Started Spamming ${code}`.inverse);
-		}
+        if (!code) {
+            console.log(`[Sendit] Error Invalid Code!`.inverse);
+        } else {
+            console.log(`[Sendit] Started Spamming ${code}`.inverse);
+        }
         let i = 0,
             int = setInterval(() => {
                 var shadow_token = uuidv4();
@@ -61,6 +62,7 @@ class Snapchat {
                 var useragent = useragents[Math.floor(Math.random() * useragents.length)];
                 var agent = new ProxyAgent('socks4://' + proxy);
                 request.get(`https://api.getSendit.com/v1/stickers/${code}??user=null&shadowToken=${shadow_token}&identify=t`, {
+                    'timeout': 2500,
                     agent,
                     json: true,
                     gzip: true,
@@ -97,6 +99,7 @@ class Snapchat {
                     request({
                         method: "POST",
                         url: 'https://api.getsendit.com/v1/posts',
+                        'timeout': 2500,
                         agent,
                         json: true,
                         gzip: true,
@@ -137,10 +140,10 @@ class Snapchat {
                             fail++;
                             console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Failed to send "${text}" with code "${code}" | ${proxy}`.red);
                         }
-                        var total = work + fail;
-                        process.title = `[Petey's Sendit Spammer] - Code ${code} | Work ${work} | Fail ${fail} | Total Requests ${total} | Total Proxies ${proxies.length}`;
                     });
                 });
+                var total = work + fail;
+                process.title = `[Petey's Sendit Spammer] - Code ${code} | Work ${work} | Fail ${fail} | Total Requests ${total} | Total Proxies ${proxies.length}`;
             }, 0);
     }
 }
@@ -154,7 +157,7 @@ readLastLine.read('history.txt', 4).then(function(lines) {
     console.log('│██╔═══╝░██╔══╝░░░░░██║░░░██╔══╝░░░░╚██╔╝░░░░░░╚═══██╗                                                        │');
     console.log('│██║░░░░░███████╗░░░██║░░░███████╗░░░██║░░░░░░██████╔╝                                                        │');
     console.log('│╚═╝░░░░░╚══════╝░░░╚═╝░░░╚══════╝░░░╚═╝░░░░░░╚═════╝░                                                        │');
-    console.log('│v1.0.6                                                                                                       │');
+    console.log('│v1.1.0                                                                                                       │');
     console.log('│░██████╗███████╗███╗░░██╗██████╗░██╗████████╗  ░██████╗██████╗░░█████╗░███╗░░░███╗███╗░░░███╗███████╗██████╗░│');
     console.log('│██╔════╝██╔════╝████╗░██║██╔══██╗██║╚══██╔══╝  ██╔════╝██╔══██╗██╔══██╗████╗░████║████╗░████║██╔════╝██╔══██╗│');
     console.log('│╚█████╗░█████╗░░██╔██╗██║██║░░██║██║░░░██║░░░  ╚█████╗░██████╔╝███████║██╔████╔██║██╔████╔██║█████╗░░██████╔╝│');
