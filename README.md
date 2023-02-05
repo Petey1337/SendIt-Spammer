@@ -18,14 +18,16 @@
   **5.** Sit back and relax!
 
   ### Facts:
+  
+  **OPEN SOURCE!**
 
-  **Automatically scrapes SOCKS4 proxies and loads them ready.**
+  **Automatically scrapes SOCKS4 proxies and loads them ready!**
 
-  **Automatically generates UUID4 shadow_token.**
+  **Automatically generates UUID4 shadow_token!**
 
-  **Automatically saves codes with names in "history.txt".**
+  **Automatically saves codes with names in "history.txt"!**
 
-  **Automatically rotates user-agents to prevent tracking.**
+  **Automatically rotates user-agents to prevent tracking!**
   
   **Automatically use last code again by typing "last"!**
   
