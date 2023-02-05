@@ -19,18 +19,20 @@
 
   ### Facts:
   
-  **OPEN SOURCE!**
+  **100% Anonymous, Hints Don't Work!**
   
-  **Automatically sends multiple messages inputted!** 
-
-  **Automatically scrapes SOCKS4 proxies and loads them ready!**
-
-  **Automatically generates UUID4 shadow_token!**
-
-  **Automatically saves codes with names in "history.txt"!**
-
-  **Automatically rotates user-agents to prevent tracking!**
+  **Open Source!**
   
-  **Automatically use last code again by typing "last"!**
+  **Automatically Sends Multiple Messages Inputted!** 
+
+  **Automatically Scrapes SOCKS4 Proxies And Loads Them Ready!**
+
+  **Automatically Generates UUID4 shadow_token!**
+
+  **Automatically Saves Codes With Names In "history.txt"!**
+
+  **Automatically Rotates User-Agents To Prevent Tracking!**
+  
+  **Automatically Uses Last Code Again By Typing "last"!**
   
   **Automatically bypasses duplication message filter!**
