@@ -35,4 +35,4 @@
   
   **Automatically Uses Last Code Again By Typing "last"!**
   
-  **Automatically bypasses duplication message filter!**
+  **Automatically Bypasses Duplication Message Filter!**
