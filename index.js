@@ -67,7 +67,7 @@ class Snapchat {
             int = setInterval(() => {
                 var shadow_token = uuidv4();
                 var proxy = proxies[Math.floor(Math.random() * proxies.length)];
-				var messagesWithJoe = messages.map(text => `${text} ${makeid(10)}`);
+		var messagesWithJoe = messages.map(text => `${text} ${makeid(10)}`);
                 var text = messagesWithJoe[Math.floor(Math.random() * messagesWithJoe.length)];
                 var useragent = useragents[Math.floor(Math.random() * useragents.length)];
                 var agent = new ProxyAgent('socks4://' + proxy);
