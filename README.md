@@ -20,6 +20,8 @@
   ### Facts:
   
   **OPEN SOURCE!**
+  
+  **Automatically sends multiple messages inputted!** 
 
   **Automatically scrapes SOCKS4 proxies and loads them ready!**
 
