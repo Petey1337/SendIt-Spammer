@@ -7,6 +7,15 @@ const fs = require('fs');
 fs.writeFileSync('history.txt', [...new Set(fs.readFileSync('history.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
 process.on('uncaughtException', err => {});
 process.on('unhandledRejection', err => {});
+function makeid(length) {
+	var result = '';
+var characters = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,<.>/?;:'"]}[{\|-_=+~*!@#$%^&`;
+	var charactersLength = characters.length;
+	for (var i = 0; i < length; i++) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+	return result;
+}
 const {
     v4: uuidv4
 } = require('uuid');
@@ -28,7 +37,7 @@ var useragents = ['Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, li
 class get {
     static snagProxy(code) {
         clear("proxies.txt");
-        var links = ["https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt", "https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks4&timeout=10000&country=all&ssl=all&anonymity=all", "https://openproxylist.xyz/socks4.txt", "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks4.txt", "https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt", "https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS4_RAW.txt", "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt", "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt", "https://raw.githubusercontent.com/RX4096/proxy-list/main/online/socks4.txt", "https://www.freeproxychecker.com/result/socks4_proxies.txt", "https://www.proxy-list.download/api/v1/get?type=socks4"];
+        var links = ["https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt", "https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks4&timeout=10000&country=all&ssl=all&anonymity=all", "https://openproxylist.xyz/socks4.txt", "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks4.txt", "https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt", "https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS4_RAW.txt", "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt", "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt", "https://raw.githubusercontent.com/RX4096/proxy-list/main/online/socks4.txt", "https://www.proxy-list.download/api/v1/get?type=socks4"];
         links.forEach(url => {
             request.get(`${url}`, {
                     'timeout': '5000',
@@ -37,10 +46,10 @@ class get {
                     }
                 },
                 (err, res, body) => {
-                    write(body, "proxies.txt");
+                    write(body + "\n", "proxies.txt");
                     fs.writeFileSync('proxies.txt', [...new Set(fs.readFileSync('proxies.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
                     if (url.length > 10) url = url.substring(0, 45);
-                    console.log(`[PROXY Grabber]: [Success]: [${url.replace('https://', '')}] Grabbed ${body.split('\n').length} proxies!`.inverse);
+                    console.log(`[PROXY Grabber]: [Success]: [${url.replace('https://', '')}] Grabbed ${body.split('\n').length} proxies!`.inverse.green);
                     var proxycount = body.split('\n').length;
                 });
         });
@@ -50,15 +59,16 @@ class get {
 class Snapchat {
     static spamSendit(code) {
         if (!code) {
-            console.log(`[Sendit] Error Invalid Code!`.inverse);
+            console.log(`[Sendit] Error Invalid Code!`.inverse.red);
         } else {
-            console.log(`[Sendit] Started Spamming ${code}`.inverse);
+            console.log(`[Sendit] Started Spamming ${code}`.inverse.green);
         }
         let i = 0,
             int = setInterval(() => {
                 var shadow_token = uuidv4();
                 var proxy = proxies[Math.floor(Math.random() * proxies.length)];
-                var text = messages[Math.floor(Math.random() * messages.length)];
+				var messagesWithJoe = messages.map(text => `${text} ${makeid(10)}`);
+                var text = messagesWithJoe[Math.floor(Math.random() * messagesWithJoe.length)];
                 var useragent = useragents[Math.floor(Math.random() * useragents.length)];
                 var agent = new ProxyAgent('socks4://' + proxy);
                 request.get(`https://api.getSendit.com/v1/stickers/${code}??user=null&shadowToken=${shadow_token}&identify=t`, {
@@ -95,7 +105,6 @@ class Snapchat {
                         var name = body.payload.sticker.author.displayName;
                     }
                     var proxy = proxies[Math.floor(Math.random() * proxies.length)];
-                    var text = messages[Math.floor(Math.random() * messages.length)];
                     request({
                         method: "POST",
                         url: 'https://api.getsendit.com/v1/posts',
@@ -150,28 +159,39 @@ class Snapchat {
 readLastLine.read('history.txt', 4).then(function(lines) {
     prompt.start();
     process.title = `[Petey's Sendit Spammer] - `;
-    console.log('┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐');
-    console.log('│██████╗░███████╗████████╗███████╗██╗░░░██╗██╗░██████╗                                                        │');
-    console.log('│██╔══██╗██╔════╝╚══██╔══╝██╔════╝╚██╗░██╔╝╚█║██╔════╝                                                        │');
-    console.log('│██████╔╝█████╗░░░░░██║░░░█████╗░░░╚████╔╝░░╚╝╚█████╗░                                                        │');
-    console.log('│██╔═══╝░██╔══╝░░░░░██║░░░██╔══╝░░░░╚██╔╝░░░░░░╚═══██╗                                                        │');
-    console.log('│██║░░░░░███████╗░░░██║░░░███████╗░░░██║░░░░░░██████╔╝                                                        │');
-    console.log('│╚═╝░░░░░╚══════╝░░░╚═╝░░░╚══════╝░░░╚═╝░░░░░░╚═════╝░                                                        │');
-    console.log('│v1.1.0                                                                                                       │');
-    console.log('│░██████╗███████╗███╗░░██╗██████╗░██╗████████╗  ░██████╗██████╗░░█████╗░███╗░░░███╗███╗░░░███╗███████╗██████╗░│');
-    console.log('│██╔════╝██╔════╝████╗░██║██╔══██╗██║╚══██╔══╝  ██╔════╝██╔══██╗██╔══██╗████╗░████║████╗░████║██╔════╝██╔══██╗│');
-    console.log('│╚█████╗░█████╗░░██╔██╗██║██║░░██║██║░░░██║░░░  ╚█████╗░██████╔╝███████║██╔████╔██║██╔████╔██║█████╗░░██████╔╝│');
-    console.log('│░╚═══██╗██╔══╝░░██║╚████║██║░░██║██║░░░██║░░░  ░╚═══██╗██╔═══╝░██╔══██║██║╚██╔╝██║██║╚██╔╝██║██╔══╝░░██╔══██╗│');
-    console.log('│██████╔╝███████╗██║░╚███║██████╔╝██║░░░██║░░░  ██████╔╝██║░░░░░██║░░██║██║░╚═╝░██║██║░╚═╝░██║███████╗██║░░██║│');
-    console.log('│╚═════╝░╚══════╝╚═╝░░╚══╝╚═════╝░╚═╝░░░╚═╝░░░  ╚═════╝░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░╚═╝│');
-    console.log('├─────────────────────────────────────────────────────────────┬───────────────────────────────────────────────┘');
-    console.log(`│Code Ex. ab4b2c69-n8a2-45ba-8a8e-3bb08440e8cm                │`);
-    var thelines = lines.split(/\r?\n/).filter(line => line.trim() !== "").join(`${"\n"}│`);
-    console.log('├─────────────────────────────────────────────────────────────┘');
+    console.log('┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐'.green);
+    console.log('│██████╗░███████╗████████╗███████╗██╗░░░██╗██╗░██████╗                                                        │'.green);
+    console.log('│██╔══██╗██╔════╝╚══██╔══╝██╔════╝╚██╗░██╔╝╚█║██╔════╝                                                        │'.green);
+    console.log('│██████╔╝█████╗░░░░░██║░░░█████╗░░░╚████╔╝░░╚╝╚█████╗░                                                        │'.green);
+    console.log('│██╔═══╝░██╔══╝░░░░░██║░░░██╔══╝░░░░╚██╔╝░░░░░░╚═══██╗                                                        │'.green);
+    console.log('│██║░░░░░███████╗░░░██║░░░███████╗░░░██║░░░░░░██████╔╝                                                        │'.green);
+    console.log('│╚═╝░░░░░╚══════╝░░░╚═╝░░░╚══════╝░░░╚═╝░░░░░░╚═════╝░                                                        │'.green);
+    console.log('│v1.1.1                                                                                                       │'.green);
+    console.log('│░██████╗███████╗███╗░░██╗██████╗░██╗████████╗  ░██████╗██████╗░░█████╗░███╗░░░███╗███╗░░░███╗███████╗██████╗░│'.green);
+    console.log('│██╔════╝██╔════╝████╗░██║██╔══██╗██║╚══██╔══╝  ██╔════╝██╔══██╗██╔══██╗████╗░████║████╗░████║██╔════╝██╔══██╗│'.green);
+    console.log('│╚█████╗░█████╗░░██╔██╗██║██║░░██║██║░░░██║░░░  ╚█████╗░██████╔╝███████║██╔████╔██║██╔████╔██║█████╗░░██████╔╝│'.green);
+    console.log('│░╚═══██╗██╔══╝░░██║╚████║██║░░██║██║░░░██║░░░  ░╚═══██╗██╔═══╝░██╔══██║██║╚██╔╝██║██║╚██╔╝██║██╔══╝░░██╔══██╗│'.green);
+    console.log('│██████╔╝███████╗██║░╚███║██████╔╝██║░░░██║░░░  ██████╔╝██║░░░░░██║░░██║██║░╚═╝░██║██║░╚═╝░██║███████╗██║░░██║│'.green);
+    console.log('│╚═════╝░╚══════╝╚═╝░░╚══╝╚═════╝░╚═╝░░░╚═╝░░░  ╚═════╝░╚═╝░░░░░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░╚═╝│'.green);
+    console.log('│ᴍᴀᴅᴇ ʙʏ ᴘᴇᴛᴇʏ ᴡɪᴛʜ ʟᴏᴠᴇ ♡                                                                                    │'.green);
+    console.log('├─────────────────────────────────────────────────────────────┬───────────────────────────────────────────────┘'.green);
+    console.log(`│Code Ex. ab4b2c69-n8a2-45ba-8a8e-3bb08440e8cm                │`.green);
+    var thelines = lines.split(/\r?\n/).filter(line => line.trim() !== "").join(`${"\n"}│`.green);
+    console.log('├─────────────────────────────────────────────────────────────┘'.green);
     console.log(`│${thelines}`);
-    console.log('└──────────────────────────────────────────────────────────────');
-    console.log('Please enter the code or "last":');
-    prompt.get(['code'], function(err, result) {
+    console.log('└──────────────────────────────────────────────────────────────'.green);
+    console.log('Please enter the code or "last"'.inverse.green);
+    prompt.message = null;
+    prompt.start();
+    prompt.get([{
+        name: 'code',
+        description: colors.green(`Petey's Sendit Spammer`.inverse.green),
+        required: true
+    }], function(err, result) {
+        if (err) {
+            return onErr(err);
+        }
+        var history = fs.readFileSync('history.txt', 'utf-8').replace(/\r/gi, '').split('\n');
         if (result.code.includes('last')) {
             readLastLine.read('history.txt', 1).then(function(lines) {
                 var thelines = lines.split(/\r?\n/).filter(line => line.trim() !== "").join(`${"\n"}`);
