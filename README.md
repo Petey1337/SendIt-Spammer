@@ -29,4 +29,4 @@
   
   **Automatically use last code again by typing "last"!**
   
-  **Automatically generates unique messages to ensure successful deliver!**
+  **Automatically bypasses duplication message filter!**
