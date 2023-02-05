@@ -37,8 +37,8 @@ var useragents = ['Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, li
 class get {
     static snagProxy(code) {
         clear("proxies.txt");
-        var links = ["https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt", "https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks4&timeout=10000&country=all&ssl=all&anonymity=all", "https://openproxylist.xyz/socks4.txt", "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-socks4.txt", "https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt", "https://raw.githubusercontent.com/roosterkid/openproxylist/main/SOCKS4_RAW.txt", "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt", "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt", "https://raw.githubusercontent.com/RX4096/proxy-list/main/online/socks4.txt", "https://www.proxy-list.download/api/v1/get?type=socks4"];
-        links.forEach(url => {
+        var links = ["https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all"];
+		links.forEach(url => {
             request.get(`${url}`, {
                     'timeout': '5000',
                     headers: {
@@ -70,7 +70,7 @@ class Snapchat {
 		var messagesWithJoe = messages.map(text => `${text} ${makeid(10)}`);
                 var text = messagesWithJoe[Math.floor(Math.random() * messagesWithJoe.length)];
                 var useragent = useragents[Math.floor(Math.random() * useragents.length)];
-                var agent = new ProxyAgent('socks4://' + proxy);
+                var agent = new ProxyAgent('http://' + proxy);
                 request.get(`https://api.getSendit.com/v1/stickers/${code}??user=null&shadowToken=${shadow_token}&identify=t`, {
                     'timeout': 2500,
                     agent,
@@ -140,7 +140,7 @@ class Snapchat {
                             "timer": 0
                         },
                     }, (err, res, body) => {
-                        if (res.statusCode == 200) {
+                        if (body.status == 'success') {
                             work++;
                             console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${work}] [Sendit] => Sent "${text}" to "${name}" with code "${code}" | ${proxy}`.green)
                             fs.writeFileSync('history.txt', [...new Set(fs.readFileSync('history.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
