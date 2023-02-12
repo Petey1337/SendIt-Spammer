@@ -5,7 +5,7 @@
 
 ## [MADE SPECIALLY FOR WINDOWS] How to install/use
 
-### Steps:
+# Steps:
 
   **1.** Install NodeJS - https://nodejs.org/en/download/
 
@@ -23,7 +23,7 @@
 
 
 
-  ### Facts & Features:
+  # Facts & Features:
   
   **100% Anonymous, Hints Don't Work!**
   
