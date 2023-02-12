@@ -23,6 +23,8 @@
   
   **Open Source!**
   
+  **Automatically Grabs Available Name!**
+  
   **Automatically Sends Multiple Messages Inputted!** 
 
   **Automatically Scrapes SOCKS4 Proxies And Loads Them Ready!**
