@@ -27,7 +27,7 @@
   
   **Automatically Sends Multiple Messages Inputted!** 
 
-  **Automatically Scrapes SOCKS4 Proxies And Loads Them Ready!**
+  **Automatically Scrapes HTTP Proxies And Loads Them Ready!**
 
   **Automatically Generates UUID4 shadow_token!**
 
