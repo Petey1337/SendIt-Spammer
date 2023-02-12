@@ -150,9 +150,11 @@ readLastLine.read('history.txt', 4).then(function(lines) {
     console.log('│ᴍᴀᴅᴇ ʙʏ ᴘᴇᴛᴇʏ ᴡɪᴛʜ ʟᴏᴠᴇ ♡                                                                                    │'.green);
     console.log('├─────────────────────────────────────────────────────────────┬───────────────────────────────────────────────┘'.green);
     console.log(`│Code Ex. ab4b2c69-n8a2-45ba-8a8e-3bb08440e8cm                │`.green);
-    var thelines = lines.split(/\r?\n/).filter(line => line.trim() !== "").join(`${"\n"}│`.green);
     console.log('├─────────────────────────────────────────────────────────────┘'.green);
-    console.log(`│${thelines}`);
+    var splitLines = lines.split(/\r?\n/).filter(line => line.trim() !== "");
+    for (var i = 0; i < splitLines.length; i++) {
+        console.log(`│${splitLines[i]}`.green);
+    }
     console.log('└──────────────────────────────────────────────────────────────'.green);
     console.log('Please enter the code or "last"'.inverse.green);
     prompt.message = null;
