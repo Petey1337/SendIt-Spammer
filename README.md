@@ -9,7 +9,7 @@
 
   **1.** Install NodeJS - https://nodejs.org/en/download/
 
-  **2.** Input messages in "**messages.txt**"
+  **2.** Input messages in "**messages.txt**" line by line
  
   **3.** Run the "**run.bat**" file to install package modules, then reopen to launch
 
