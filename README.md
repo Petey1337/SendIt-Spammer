@@ -9,13 +9,15 @@
 
   **1.** Install NodeJS - https://nodejs.org/en/download/
 
-  **2.** Run the "**run.bat**" file to install package modules, then reopen to launch
+  **2.** Input messages in "**messages.txt**"
+ 
+  **3.** Run the "**run.bat**" file to install package modules, then reopen to launch
 
-  **3.** Obtain the code or url by sliding up on the story and copying the web address. Ex: **https://reply.getsendit.com/s/ab4b2c69-n8a2-45ba-8a8e-3bb08440e8cm** or **ab4b2c69-n8a2-45ba-8a8e-3bb08440e8cm**
+  **4.** Obtain the code or url by sliding up on the story and copying the web address. Ex: **https://reply.getsendit.com/s/ab4b2c69-n8a2-45ba-8a8e-3bb08440e8cm** or **ab4b2c69-n8a2-45ba-8a8e-3bb08440e8cm**
 
-  **4.** Paste/type in code
+  **5.** Paste/type in code
 
-  **5.** Sit back and relax!
+  **6.** Sit back and relax!
 
 
 
