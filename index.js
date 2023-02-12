@@ -157,7 +157,6 @@ readLastLine.read('history.txt', 4).then(function(lines) {
 	}
 	console.log('└─────────────────────────────────────────────────────────────┘'.green);
 	console.log('Please enter the code or "last"'.inverse.green);
-	console.log('Please enter the code or "last"'.inverse.green);
 	prompt.message = null;
 	prompt.start();
 	prompt.get([{
