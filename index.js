@@ -7,23 +7,26 @@ const fs = require('fs');
 fs.writeFileSync('history.txt', [...new Set(fs.readFileSync('history.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
 process.on('uncaughtException', err => {});
 process.on('unhandledRejection', err => {});
+
 function makeid(length) {
-	var result = '';
-var characters = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,<.>/?;:'"]}[{\|-_=+~*!@#$%^&`;
-	var charactersLength = characters.length;
-	for (var i = 0; i < length; i++) {
-		result += characters.charAt(Math.floor(Math.random() * charactersLength));
-	}
-	return result;
+    var result = '';
+    var characters = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,<.>/?;:'"]}[{\|-_=+~*!@#$%^&`;
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }
 const {
     v4: uuidv4
 } = require('uuid');
+
 function write(content, file) {
     [...new Set(fs.appendFile(file, content, function(err) {}))];
 }
 var fail = 0;
 var work = 0;
+
 function clear(file) {
     var stream = fs.createWriteStream(file);
     stream.once('open', function(fd) {
@@ -38,7 +41,7 @@ class get {
     static snagProxy(code) {
         clear("proxies.txt");
         var links = ["https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all"];
-		links.forEach(url => {
+        links.forEach(url => {
             request.get(`${url}`, {
                     'timeout': '5000',
                     headers: {
@@ -67,92 +70,63 @@ class Snapchat {
             int = setInterval(() => {
                 var shadow_token = uuidv4();
                 var proxy = proxies[Math.floor(Math.random() * proxies.length)];
-		var messagesWithJoe = messages.map(text => `${text} ${makeid(10)}`);
+                var messagesWithJoe = messages.map(text => `${text} ${makeid(10)}`);
                 var text = messagesWithJoe[Math.floor(Math.random() * messagesWithJoe.length)];
                 var useragent = useragents[Math.floor(Math.random() * useragents.length)];
+                var jar = request.jar();
                 var agent = new ProxyAgent('http://' + proxy);
-                request.get(`https://api.getSendit.com/v1/stickers/${code}??user=null&shadowToken=${shadow_token}&identify=t`, {
-                    'timeout': 2500,
+                request.get(`https://reply.getsendit.com/s/${code}?`, {
                     agent,
-                    json: true,
-                    gzip: true,
+                    jar,
                     headers: {
-                        'content-encoding': 'br',
-                        'content-type': 'application/json; charset=utf-8',
-                        'accept': '*/*',
-                        'app-id': 'c2ad997f-1bf2-4f2c-b5fd-83926e8f3c65',
-                        'app-version': '1.0',
-                        'content-type': ' application-json',
-                        'origin': 'https://reply.getSendit.com',
-                        'referer': `https://reply.getSendit.com`,
-                        'user-agent': useragent
+                        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                        "accept-language": "en-US,en;q=0.9",
+                        "cache-control": "max-age=0",
+                        "sec-ch-ua": "\"Not_A Brand\";v=\"99\", \"Google Chrome\";v=\"109\", \"Chromium\";v=\"109\"",
+                        "sec-ch-ua-mobile": "?0",
+                        "sec-ch-ua-platform": "\"Windows\"",
+                        "sec-fetch-dest": "document",
+                        "sec-fetch-mode": "navigate",
+                        "sec-fetch-site": "same-origin",
+                        "sec-fetch-user": "?1",
+                        "upgrade-insecure-requests": "1",
+                        "user-agent": useragent
                     },
-                }, (err, res, body) => {
-                    if (body.status === 'failure') {
-                        if (res.statusCode == 500) {
-                            fail++;
-                            console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Error: Invalid Code!`.red);
-                        } else if (res.statusCode == 400) {
-                            fail++;
-                            console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Error: Invalid Code!`.red);
-                        }
-                        fail++;
-                        console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Error: Invalid Code!`.red);
-                        fs.writeFileSync('history.txt', [...new Set(fs.readFileSync('history.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
-                    };
-                    if (body.status === 'success') {
-                        var id = body.payload.sticker.author.id;
-                        var name = body.payload.sticker.author.displayName;
-                    }
-                    var proxy = proxies[Math.floor(Math.random() * proxies.length)];
-                    request({
-                        method: "POST",
-                        url: 'https://api.getsendit.com/v1/posts',
-                        'timeout': 2500,
+                }, async (err, res, body) => {
+                    var name = body.match(/"displayName":"(.*?)"/)[1];
+                    var userid = body.match(/"author":{"id":"(.*?)"/)[1];
+                    var stickerid = body.match(/"sticker":{"id":"(.*?)"/)[1];
+                    request.post('https://reply.getsendit.com/api/v1/sendpost', {
                         agent,
-                        json: true,
-                        gzip: true,
+                        jar,
                         headers: {
-                            'content-type': 'application/json; charset=utf-8',
-                            'accept': '*/*',
-                            'app-id': 'c2ad997f-1bf2-4f2c-b5fd-83926e8f3c65',
-                            'app-version': '1.0',
-                            'accept-encoding': 'gzip, deflate, br',
-                            'vary': 'Accept-Encoding',
-                            'accept-language': 'en-US,en;q=0.9',
-                            'content-type': 'application/json',
-                            'origin': 'https://web.getsendit.com',
-                            'user-agent': useragent
+                            "accept": "*/*",
+                            "accept-language": "en-US,en;q=0.9",
+                            "content-type": "text/plain;charset=UTF-8",
+                            "sec-ch-ua": "\"Not_A Brand\";v=\"99\", \"Google Chrome\";v=\"109\", \"Chromium\";v=\"109\"",
+                            "sec-ch-ua-mobile": "?0",
+                            "sec-ch-ua-platform": "\"Windows\"",
+                            "sec-fetch-dest": "empty",
+                            "sec-fetch-mode": "cors",
+                            "sec-fetch-site": "same-origin",
+                            "cookie": `sendit-shadow-token=${shadow_token}`,
+                            "Referer": `https://reply.getsendit.com/s/${code}?`,
+                            "Referrer-Policy": "strict-origin-when-cross-origin",
+                            "user-agent": useragent
                         },
-                        body: {
-                            "recipient_identity": {
-                                "type": "id",
-                                "value": id
-                            },
-                            "type": "sendit.post-type:question-and-answer-v1",
-                            "data": {
-                                "question": text
-                            },
-                            "ext_data": {
-                                "sticker_id": code,
-                                "author_shadow_token": shadow_token
-                            },
-                            "timer": 0
-                        },
-                    }, (err, res, body) => {
-                        if (body.status == 'success') {
+                        "body": `{\"data\":{\"postType\":\"sendit.post-type:question-and-answer-v1\",\"userId\":\"${userid}\",\"stickerId\":\"${stickerid}\",\"shadowToken\":\"${shadow_token}\",\"platform\":\"snapchat\",\"userAgent\":\"${useragent}\"},\"replyData\":{\"question\":\"${text}\",\"promptText\":\"\"}}`,
+                    }, async (err, res, body) => {
+                        if (body.includes('success')) {
                             work++;
                             console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${work}] [Sendit] => Sent "${text}" to "${name}" with code "${code}" | ${proxy}`.green)
-                            fs.writeFileSync('history.txt', [...new Set(fs.readFileSync('history.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
                             write(`${name} - ${code}${'\n'}`, "history.txt");
+                            fs.writeFileSync('history.txt', [...new Set(fs.readFileSync('history.txt', 'utf-8').replace(/\r/g, '').split('\n'))].join('\n'));
                         } else {
                             fail++;
                             console.log(`[${new Date().toLocaleTimeString()}] [${res.statusCode}] [${fail}] [Sendit] => Failed to send "${text}" with code "${code}" | ${proxy}`.red);
                         }
                     });
                 });
-                var total = work + fail;
-                process.title = `[Petey's Sendit Spammer] - Code ${code} | Work ${work} | Fail ${fail} | Total Requests ${total} | Total Proxies ${proxies.length}`;
             }, 0);
     }
 }
@@ -166,7 +140,7 @@ readLastLine.read('history.txt', 4).then(function(lines) {
     console.log('│██╔═══╝░██╔══╝░░░░░██║░░░██╔══╝░░░░╚██╔╝░░░░░░╚═══██╗                                                        │'.green);
     console.log('│██║░░░░░███████╗░░░██║░░░███████╗░░░██║░░░░░░██████╔╝                                                        │'.green);
     console.log('│╚═╝░░░░░╚══════╝░░░╚═╝░░░╚══════╝░░░╚═╝░░░░░░╚═════╝░                                                        │'.green);
-    console.log('│v1.1.2                                                                                                       │'.green);
+    console.log('│v1.1.1                                                                                                       │'.green);
     console.log('│░██████╗███████╗███╗░░██╗██████╗░██╗████████╗  ░██████╗██████╗░░█████╗░███╗░░░███╗███╗░░░███╗███████╗██████╗░│'.green);
     console.log('│██╔════╝██╔════╝████╗░██║██╔══██╗██║╚══██╔══╝  ██╔════╝██╔══██╗██╔══██╗████╗░████║████╗░████║██╔════╝██╔══██╗│'.green);
     console.log('│╚█████╗░█████╗░░██╔██╗██║██║░░██║██║░░░██║░░░  ╚█████╗░██████╔╝███████║██╔████╔██║██╔████╔██║█████╗░░██████╔╝│'.green);
