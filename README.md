@@ -3,7 +3,7 @@
 ![](https://github.com/Petey1337/sendit-spammer/blob/main/sendit%20video.gif?raw=true)
 ### ⚠️ You are fully responsible for however you use this. ⚠️
 
-## [MADE SPECIALLY FOR WINDOWS] How to install/use
+## How to install/use
 
 # Steps:
 
