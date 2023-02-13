@@ -1,13 +1,15 @@
-##### Sendit Spammer Nodejs - Created by Petey
-**Support:** https://discord.gg/hWf8wk5tzF
-![](https://github.com/Petey1337/sendit-spammer/blob/main/sendit%20video.gif?raw=true)
-### ⚠️ You are fully responsible for however you use this. ⚠️
+<div align="center">
 
-## How to install/use
+# SendIt Spammer
+![Status](https://img.shields.io/badge/status-working-lime)
 
-# Steps:
+</div>
 
-  **1.** Install NodeJS - https://nodejs.org/en/download/
+## Sneak Peak
+![fullscreen](![image](https://github.com/Petey1337/SendIt-Spammer/blob/main/sneakpeak.png?raw=true))
+
+## Steps
+**1.** Install NodeJS - https://nodejs.org/en/download/
 
   **2.** Input messages in "**messages.txt**" line by line
  
@@ -20,29 +22,5 @@
   **6.** Sit back and relax!
 
 
-
-
-
-
-
-  # Facts & Features:
-  
-  **100% Anonymous, Hints Don't Work!**
-  
-  **Open Source!**
-  
-  **Automatically Grabs Available Name!**
-  
-  **Automatically Sends Multiple Messages Inputted!** 
-
-  **Automatically Scrapes HTTP Proxies And Loads Them Ready!**
-
-  **Automatically Generates UUID4 shadow_token!**
-
-  **Automatically Saves Codes With Names In "history.txt"!**
-
-  **Automatically Rotates User-Agents To Prevent Tracking!**
-  
-  **Automatically Uses Last Code Again By Typing "last"!**
-  
-  **Automatically Bypasses Duplication Message Filter!**
+## Legal Disclaimer
+* This tool is provided for informational purposes only and is not intended to be used for any illegal or unauthorized activity, including but not limited to spamming of websites. We do not endorse or condone any such activities.
