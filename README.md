@@ -6,7 +6,7 @@
 </div>
 
 ## Sneak Peak
-<img src="https://github.com/Petey1337/SendIt-Spammer/blob/main/sneak_peak.png?raw=true" alt="Screenshot" style="width:100%;height:auto;">
+<img src="https://github.com/Petey1337/SendIt-Spammer/blob/main/sneak_peak.png?raw=true" alt="Screenshot" style="width:80%;height:auto;">
 
 ## Steps
 **1.** Install NodeJS - https://nodejs.org/en/download/
