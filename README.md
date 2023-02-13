@@ -1,12 +1,12 @@
 <div align="center">
 
-# SendIt Spammer
+# Petey's Sendit Spammer
 ![Status](https://img.shields.io/badge/status-working-lime)
 
 </div>
 
 ## Sneak Peak
-![fullscreen](![image](https://github.com/Petey1337/SendIt-Spammer/blob/main/sneakpeak.png?raw=true))
+<img src="https://github.com/Petey1337/SendIt-Spammer/blob/main/sneak_peak.png?raw=true" alt="Screenshot" style="width:100%;height:auto;">
 
 ## Steps
 **1.** Install NodeJS - https://nodejs.org/en/download/
