@@ -19,7 +19,7 @@
   Ex: **https://reply.getsendit.com/s/ab4b2c69-n8a2-45ba-8a8e-3bb08440e8cm**<br>
   Ex: **ab4b2c69-n8a2-45ba-8a8e-3bb08440e8cm**
 
-  **5.** Paste/type in url/code
+  **5.** Type in url/code
 
   **6.** Sit back and relax!
 
