@@ -8,18 +8,9 @@ fs.writeFileSync('history.txt', [...new Set(fs.readFileSync('history.txt', 'utf-
 process.on('uncaughtException', err => {});
 process.on('unhandledRejection', err => {});
 const getRandomNumber = () => Math.floor(Math.random() * 999) + 1;
-function makeid(length) {
-    var result = '';
-    var characters = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,<.>/?;:'"]}[{\|-_=+~*!@#$%^&`;
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
 function unclear(length) {
     var result = '';
-    var characters = `              　`;
+    var characters = ` `;
     var charactersLength = characters.length;
     for (var i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -29,7 +20,6 @@ function unclear(length) {
 const {
     v4: uuidv4
 } = require('uuid');
-
 function write(content, file) {
     [...new Set(fs.appendFile(file, content, function(err) {}))];
 }
@@ -148,7 +138,7 @@ readLastLine.read('history.txt', 4).then(function(lines) {
     console.log('│██╔═══╝░██╔══╝░░░░░██║░░░██╔══╝░░░░╚██╔╝░░░░░░╚═══██╗                                                        │'.green);
     console.log('│██║░░░░░███████╗░░░██║░░░███████╗░░░██║░░░░░░██████╔╝                                                        │'.green);
     console.log('│╚═╝░░░░░╚══════╝░░░╚═╝░░░╚══════╝░░░╚═╝░░░░░░╚═════╝░                                                        │'.green);
-    console.log('│v2.0.1                                                                                                       │'.green);
+    console.log('│v2.0.2                                                                                                       │'.green);
     console.log('│░██████╗███████╗███╗░░██╗██████╗░██╗████████╗  ░██████╗██████╗░░█████╗░███╗░░░███╗███╗░░░███╗███████╗██████╗░│'.green);
     console.log('│██╔════╝██╔════╝████╗░██║██╔══██╗██║╚══██╔══╝  ██╔════╝██╔══██╗██╔══██╗████╗░████║████╗░████║██╔════╝██╔══██╗│'.green);
     console.log('│╚█████╗░█████╗░░██╔██╗██║██║░░██║██║░░░██║░░░  ╚█████╗░██████╔╝███████║██╔████╔██║██╔████╔██║█████╗░░██████╔╝│'.green);
@@ -179,12 +169,12 @@ readLastLine.read('history.txt', 4).then(function(lines) {
         if (result.code.includes('last')) {
             readLastLine.read('history.txt', 1).then(function(lines) {
                 var thelines = lines.split(/\r?\n/).filter(line => line.trim() !== "").join(`${"\n"}`);
-                var code = thelines.match(/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/g)[0];
+                var code = thelines.match(/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/gi)[0];
                 get.snagProxy(code);
             });
         } else {
             try {
-                var code = result.code.match(/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/g)[0];
+                var code = result.code.match(/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/gi)[0];
             } catch (err) {}
             get.snagProxy(code);
         }
